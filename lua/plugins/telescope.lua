@@ -1,7 +1,7 @@
 return {
   'nvim-telescope/telescope.nvim',
   dependencies = { 'nvim-lua/plenary.nvim' },
-  config = function ()
+  config = function()
     -- Using protected call
     local status_ok, telescope = pcall(require, "telescope")
     if not status_ok then
@@ -18,7 +18,7 @@ return {
         path_display = { "smart" },
         file_ignore_patterns = { ".git/", "node_modules", ".idea" },
         layout_config = {
-          preview_width = 80 
+          -- preview_width = 80
           -- other layout configuration here
         },
       },

@@ -5,25 +5,14 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   config = function()
-    -- Using protected call
-    local status_ok, nvim_tree = pcall(require, "nvim-tree")
-    if not status_ok then
-      return
-    end
-    local config_status_ok, nvim_tree_config = pcall(require, "nvim-tree.config")
-    if not config_status_ok then
-      return
-    end
-
-    local tree_cb = nvim_tree_config.nvim_tree_callback
-
-    nvim_tree.setup {
+    require("nvim-tree").setup {
       update_focused_file = {
-        enable = true,
-        update_cwd = true,
+        enable = false,
+        update_cwd = false,
       },
       renderer = {
         root_folder_modifier = ":t",
+        group_empty = true,
         icons = {
           glyphs = {
             default = "",
@@ -51,8 +40,8 @@ return {
         },
       },
       diagnostics = {
-        enable = true,
-        show_on_dirs = true,
+        enable = false,
+        show_on_dirs = false,
         icons = {
           hint = "",
           info = "",
@@ -61,12 +50,11 @@ return {
         },
       },
       view = {
-        width = 25,
+        adaptive_size = true,
         side = "left",
       },
     }
 
-    -- Setting Keymaps
-    vim.keymap.set("n", "<leader>.", ":NvimTreeToggle<CR>", { silent = true})
+    vim.keymap.set("n", "<leader>.", ":NvimTreeToggle<CR>", { silent = true })
   end,
 }

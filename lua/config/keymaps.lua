@@ -17,12 +17,10 @@ map('n', '<leader>h', ':wincmd h<CR>', { noremap = true })
 map('n', '<leader>j', ':wincmd j<CR>', { noremap = true })
 map('n', '<leader>k', ':wincmd k<CR>', { noremap = true })
 map('n', '<leader>l', ':wincmd l<CR>', { noremap = true })
--- map('n', '<Tab>', ':tabnext<CR>', {noremap = true})
--- map('n', '<S-Tab>', ':tabprevious<CR>', {noremap = true})
+-- map('n', '<Tab>', ':tabnext<CR>', { noremap = true })
+map('n', '<S-Tab>', ':tabprevious<CR>', { noremap = true })
 map('n', '<leader>t', ':tabnew<CR>', { noremap = true })
 map('n', '<Leader>+', ':vertical resize +5<CR>', { noremap = true, silent = true })
-map('n', '<Leader>-', ':vertical resize -5<CR>', { noremap = true, silent = true })
-map('n', '<leader>t', ':tabnew<CR>', { noremap = true })
 map('n', '<leader>fmt', ':Format<CR>', { noremap = true })
 map('n', '<leader>q', ':xa<CR>', { noremap = true })
 cmd [[command! Format execute 'lua vim.lsp.buf.formatting()']]
@@ -43,15 +41,13 @@ vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
-wildmenumode = function()
-  return fn.wildmenumode() ~= 0
-end
-map('c', '<space>', 'wildmenumode() ? "<Down>" : "\\<space>"', { noremap = true, expr = true })
-
------------------------------------------------------------
--- Nerdtree shortcuts:
------------------------------------------------------------
-map('n', '<leader>.', ':NERDTreeToggle<CR>', default_opts) -- open/close
-
-cmd [[autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif]]
-g.NERDTreeRespectWildIgnore = 1
+vim.o.confirm = true
+--vim.api.nvim_create_autocmd("BufEnter", {
+--group = vim.api.nvim_create_augroup("NvimTreeClose", { clear = true }),
+--callback = function()
+--local layout = vim.api.nvim_call_function("winlayout", {})
+--if layout[1] == "leaf" and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree" and layout[3] == nil then
+--vim.cmd("quit")
+--end
+--end
+--})

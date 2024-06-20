@@ -20,22 +20,19 @@ return {
       version = "v2.*",                -- Specify major version
       build = "make install_jsregexp", -- Install JS regexp for LuaSnip
     },
+
     -- Auto Formatting
     "stevearc/conform.nvim",
-
-    -- Java LSP
-    'mfussenegger/nvim-jdtls',
   },
   config = function()
     local lsp = require("lsp-zero")
     local lspconfig = require("lspconfig")
     local cmp = require("cmp")
 
-    --local mason_registry = require("mason-registry")
-    --local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path() ..
-    --"/node_modules/@vue/language-server"
-    --lspconfig.volar.setup({})
+    -- Apply recommended preset
+    lsp.preset("recommended")
 
+    -- Configure lua language server for Neovim
     lsp.configure("lua_ls", {
       settings = {
         Lua = {
@@ -45,6 +42,12 @@ return {
         },
       },
     })
+
+    -- Setup for tsserver with custom initialization
+    -- Integrate vue-language-server with tsserver
+    local mason_registry = require("mason-registry")
+    local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
+        .. "/node_modules/@vue/language-server"
 
     lspconfig.tsserver.setup({
       on_init = function(client)
@@ -64,19 +67,28 @@ return {
       detach = false,
     })
 
+    -- Setup Volar for Vue 3 development
+    lspconfig.volar.setup({})
+
+    -- Setup nvim-cmp for autocompletion
+    local cmp_select = { behavior = cmp.SelectBehavior.Select }
+    local cmp_mappings = lsp.defaults.cmp_mappings({
+      ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+      ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+      ["<CR>"] = cmp.mapping.confirm({ select = true }),
+      ["<C-Space>"] = cmp.mapping.complete(),
+    })
+
+    -- Remove Tab mappings
+    cmp_mappings["<Tab>"] = nil
+    cmp_mappings["<S-Tab>"] = nil
+
     lsp.setup_nvim_cmp({
       preselect = "none",
       completion = {
         completeopt = "menu,menuone,noinsert",
       },
-      mapping = lsp.defaults.cmp_mappings({
-        ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-        ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<Tab>"] = nil,
-        ["<s-tab>"] = nil
-      }),
+      mapping = cmp_mappings,
     })
 
     -- Set preferences for LSP
@@ -110,6 +122,9 @@ return {
       vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
     end)
 
+    -- Skip setup for rust_analyzer
+    --lsp.skip_server_setup({ "rust_analyzer" })
+
     -- Global server configuration
     lsp.set_server_config({
       on_init = function(client)
@@ -120,7 +135,6 @@ return {
     -- Finalize LSP setup
     lsp.setup()
 
-    -- Setup nvim-cmp for autocompletion
     -- Additional nvim-cmp setup
     cmp.setup({
       formatting = {

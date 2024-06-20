@@ -57,8 +57,8 @@ opt.ignorecase = true -- ignore case letters when search
 opt.smartcase = true  -- ignore lowercase for the whole pattern
 opt.cursorline = true -- highlight current line
 opt.scrolloff = 8     -- lines below last edited line
-opt.signcolumn = 'no'
---opt.signcolumn = 'yes:1'
+--opt.signcolumn = 'no'
+opt.signcolumn = 'yes:1'
 --opt.colorcolumn = 80
 
 function toggle_signcolumn()

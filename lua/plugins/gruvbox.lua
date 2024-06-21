@@ -4,7 +4,7 @@ return {
   priority = 1000,
   config = function()
     vim.g.gruvbox_material_foreground = "material"
-    vim.g.gruvbox_material_background = "medium"
+    vim.g.gruvbox_material_background = "hard"
     vim.g.gruvbox_material_enable_bold = 0
     vim.g.gruvbox_material_transparent_background = 1
     vim.g.gruvbox_material_diagnostic_virtual_text = "colored"
@@ -23,8 +23,11 @@ return {
     highlight FloatBorder ctermbg=NONE guibg=NONE
     highlight PMenu ctermbg=NONE guibg=NONE
     highlight NormalFloat ctermfg=223 ctermbg=None guibg=None guifg=#d4be98
-    highlight! link NvimTreeFolderName Normal
-    highlight! link NvimTreeOpenedFolderName Normal
     ]]
+
+    --vim.cmd [[
+    --highlight! link NvimTreeFolderName Normal
+    --highlight! link NvimTreeOpenedFolderName Normal
+    --]]
   end
 }

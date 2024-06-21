@@ -1,31 +1,56 @@
 return {
   "ibhagwan/fzf-lua",
-  -- optional for icon support
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
-    -- calling `setup` is optional for customization
+    --local fzf_defaults = require("fzf-lua.defaults").defaults
+    --vim.cmd [[
+    --highlight FzfLuaPath guifg=#7daea3
+    --highlight FzfLuaLineNr guifg=#7daea3
+    --highlight FzfLuaMatch guifg=#7daea3
+    --]]
+
     require("fzf-lua").setup({
-      "default",
       fzf_opts = {
-        -- Change the pointer symbol
         ['--pointer'] = '❯',
-        -- ['--prompt'] = 'MyPrompt> ',
+        --['--layout'] = 'reverse-list'
       },
       fzf_colors = {
-        -- Define color settings
+        ---- kanagawa color changes
         --["pointer"] = { "fg", "Error" }, -- Change the pointer color to yellow
         --["hl"]      = { "fg", "Error" },
         --["hl+"]     = { "fg", "Error" },
         --["spinner"] = { "fg", "Pmenu" },
-        --["query"]   = { "fg", "Pmenu" },
-        --["info"]    = { "fg", "Error" },
+        --["info"]    = { "fg", "Special" },
+        --["query"]   = { "fg", "Normal" },
+        --["fg"]      = { "fg", "Normal" },
+        --["fg+"]     = { "fg", "Normal" },
         --["gutter"]  = "-1",
+
+        ---- gruvbox color changes
         ["hl"]     = { "fg", "Green" },
         ["hl+"]    = { "fg", "Green" },
         ["info"]   = { "fg", "Pmenu" },
         ["gutter"] = "-1",
       },
-      winopts = { height = 0.8, width = 0.8 },
+      --grep = {
+      --rg_opts =
+      ----blue 0x87,0xaf,0xd7
+      ----white 0xdc,0xd7,0xba
+      ----orange 0xb6,0x92,0x7b
+      --'--colors "match:fg:0x87,0xaf,0xd7" --colors "path:fg:0xdc,0xd7,0xba" --colors "line:fg:0xdc,0xd7,0xba" '
+      --.. fzf_defaults.grep.rg_opts,
+      --},
+      winopts = {
+        height  = 0.90, -- window height
+        width   = 0.80, -- window width
+        row     = 0.50, -- window row position (0=top, 1=bottom)
+        col     = 0.50,
+        preview = {
+          vertical = 'down:60%',
+          layout   = "vertical",
+          wrap     = 'wrap'
+        }
+      },
       defaults = {
         git_icons   = false,
         file_icons  = false,

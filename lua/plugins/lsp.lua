@@ -33,7 +33,28 @@ return {
     lsp.preset("recommended")
 
     -- Configure lua language server for Neovim
+    lsp.configure("rust_analyzer", {
+      handlers = {
+        ["textDocument/hover"] = vim.lsp.with(
+          vim.lsp.handlers.hover, {
+            max_width = 80,     -- Adjust the width as needed
+            max_height = 20,    -- Adjust the height as needed
+            border = "rounded", -- Optional: Add a border to the hover window
+          }
+        ),
+      },
+    })
+
     lsp.configure("lua_ls", {
+      handlers = {
+        ["textDocument/hover"] = vim.lsp.with(
+          vim.lsp.handlers.hover, {
+            max_width = 80,     -- Adjust the width as needed
+            max_height = 20,    -- Adjust the height as needed
+            border = "rounded", -- Optional: Add a border to the hover window
+          }
+        ),
+      },
       settings = {
         Lua = {
           diagnostics = {
@@ -160,7 +181,6 @@ return {
       },
     })
 
-    -- Configure diagnostic settings
     vim.diagnostic.config({
       virtual_text = true,
     })
